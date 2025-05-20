@@ -138,7 +138,7 @@
 
                             <td>Fecha de Nacimiento</td>
 
-                            <td><input type="text" name="PacNacimiento"
+                            <td><input type="date" name="PacNacimiento"
 
                                     id="PacNacimiento"></td>
                         </tr>
