@@ -41,6 +41,21 @@ if (isset($_GET["accion"])) {
         $controlador->verCita($_GET["numero"]);
     } elseif ($_GET["accion"] == "confirmarCancelar") {
         $controlador->confirmarCancelarCita($_GET["numero"]);
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'medicos') {
+        require_once 'Modelo/Medico.php';
+        $medicos = obtenerMedicos();
+        include 'Vista/html/medicos.php';
+        exit;
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'agregar_medico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        require_once 'Modelo/Medico.php';
+        agregarMedico($_POST['nombre'], $_POST['especialidad']);
+        header('Location: index.php?accion=medicos');
+        exit;
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'eliminar_medico' && isset($_GET['id'])) {
+        require_once 'Modelo/Medico.php';
+        eliminarMedico($_GET['id']);
+        header('Location: index.php?accion=medicos');
+        exit;
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
