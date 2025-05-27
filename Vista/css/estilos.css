@@ -1,3 +1,8 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #dfdfdf;
 }
@@ -56,4 +61,125 @@ div#contenido {
     display: block;
     text-decoration: none;
     color : #000000;
+}
+
+/* estilos del cosito de formulario de medicos*/
+#editarMedicoModal {
+    display: none;
+    position: fixed;
+    padding-left: 50%;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 1.5px 8px rgba(0,117,255,0.08);
+    z-index: 1000;
+    min-width: 320px;
+    max-width: 95vw;
+}
+
+#editarMedicoModal h3 {
+    margin-top: 0;
+    color: #0075ff;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+}
+
+#editarMedicoModal label {
+    display: block;
+    margin-bottom: 6px;
+    color: #222;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+#editarMedicoModal input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border: 1.5px solid #d3d3d3;
+    border-radius: 7px;
+    font-size: 1em;
+    background: #f4f8fb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+#editarMedicoModal input[type="text"]:focus {
+    border-color: #0075ff;
+    box-shadow: 0 0 0 2px #0075ff22;
+    outline: none;
+}
+
+#editarMedicoModal button[type="submit"],
+#editarMedicoModal button[type="button"] {
+    border: none;
+    border-radius: 6px;
+    padding: 9px 22px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 5px;
+    box-shadow: 0 2px 8px rgba(0,117,255,0.07);
+}
+
+#editarMedicoModal button[type="submit"] {
+    background: linear-gradient(90deg, #0075ff 60%, #3fa9f5 100%);
+    color: #fff;
+}
+
+#editarMedicoModal button[type="submit"]:hover {
+    background: linear-gradient(90deg, #005bb5 60%, #0075ff 100%);
+    color: #fff;
+}
+
+#editarMedicoModal button[type="button"] {
+    background: #f2f2f2;
+    color: #333;
+}
+
+#editarMedicoModal button[type="button"]:hover {
+    background: #e0e0e0;
+    color: #0075ff;
+}
+
+
+/* estilos para el cosito del login */
+.login-box {
+    width: 350px;
+    margin: 100px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    padding: 30px 30px 20px 30px;
+}
+.login-box h2 {
+    text-align: center;
+    color: #0075ff;
+}
+.login-box input[type="text"], .login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    font-size: 1em;
+    background: #f7f7f7;
+}
+.login-box button {
+    width: 100%;
+    background: #0075ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: bold;
+}
+.login-box .error {
+    color: #c00;
+    text-align: center;
+    margin-bottom: 10px;
 }

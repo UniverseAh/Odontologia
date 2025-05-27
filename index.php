@@ -1,4 +1,47 @@
 <?php
+session_start();
+
+if (isset($_GET['accion']) && $_GET['accion'] == 'logout') {
+    session_destroy();
+    header('Location: index.php?accion=login');
+    exit;
+}
+
+if (
+    (!isset($_SESSION['usuario']) || empty($_SESSION['usuario'])) &&
+    (!isset($_GET['accion']) || $_GET['accion'] != 'login')
+) {
+    header('Location: index.php?accion=login');
+    exit;
+}
+
+// login
+if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    $usuario = $_POST['usuario'];
+    $clave = $_POST['clave'];
+
+    if ($usuario === 'admin' && $clave === 'admin123') {
+        $_SESSION['usuario'] = $usuario;
+        header('Location: index.php');
+        exit;
+    } else {
+        $error = "Usuario o contraseña incorrectos";
+        include 'Vista/html/login.php';
+        exit;
+    }
+}
+
+if (isset($_GET['accion']) && $_GET['accion'] == 'login') {
+    if (isset($error)) {
+        include 'Vista/html/login.php';
+    } else {
+        $error = null;
+        include 'Vista/html/login.php';
+    }
+    exit;
+}
+
+///////////////////////////////////////////////////////////
 require_once 'Controlador/Controlador.php';
 require_once 'Modelo/GestionCita.php';
 require_once 'Modelo/Citas.php';
@@ -42,21 +85,31 @@ if (isset($_GET["accion"])) {
     } elseif ($_GET["accion"] == "confirmarCancelar") {
         $controlador->confirmarCancelarCita($_GET["numero"]);
     } elseif (isset($_GET['accion']) && $_GET['accion'] == 'medicos') {
-        require_once 'Modelo/Medico.php';
-        $medicos = obtenerMedicos();
-        include 'Vista/html/medicos.php';
-        exit;
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'agregar_medico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-        require_once 'Modelo/Medico.php';
-        agregarMedico($_POST['nombre'], $_POST['especialidad']);
+        $controlador->listarMedicos();
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'agregarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $controlador->agregarMedico(
+            $_POST["MedIdentificacion"],
+            $_POST["MedNombres"],
+            $_POST["MedApellidos"]
+        );
         header('Location: index.php?accion=medicos');
         exit;
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'eliminar_medico' && isset($_GET['id'])) {
-        require_once 'Modelo/Medico.php';
-        eliminarMedico($_GET['id']);
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'eliminarMedico' && isset($_GET['id'])) {
+        $controlador->eliminarMedico($_GET["id"]);
         header('Location: index.php?accion=medicos');
         exit;
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'editarMedico' && isset($_GET['id'])) {
+        $controlador->editarMedico($_GET["id"]);
+        header('Location: index.php?accion=medicos');
+        exit;
+    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'actualizarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $controlador->actualizarMedico(
+            $_POST["MedIdentificacion"],
+            $_POST["MedNombres"],
+            $_POST["MedApellidos"]
+        );
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
 }
+?>

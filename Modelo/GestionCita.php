@@ -117,4 +117,38 @@ CitFecha = '$fecha'"
         $conexion->cerrar();
         return $filasAfectadas;
     }
+    public function agregarMedico($doc, $nom, $ape)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "INSERT INTO medicos (MedIdentificacion, MedNombres, MedApellidos) VALUES ('$doc', '$nom', '$ape')";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+    public function consultarMedicoPorId($id)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM medicos WHERE MedIdentificacion = '$id'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result->fetch_object();
+    }
+    public function actualizarMedico($doc, $nom, $ape)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "UPDATE medicos SET MedNombres = '$nom', MedApellidos = '$ape' WHERE MedIdentificacion = '$doc'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+    public function eliminarMedico($id)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "DELETE FROM medicos WHERE MedIdentificacion = '$id'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
 }
