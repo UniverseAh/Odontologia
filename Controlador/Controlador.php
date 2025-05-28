@@ -123,3 +123,64 @@ class Controlador
         return $result;
     }
 }
+
+//------------------------login de mrd-----------------------
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $conn = new mysqli("localhost", "root", "", "citas");
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    $usuario = $_POST['usuario'];
+    $clave = $_POST['clave'];
+    $rol = $_POST['rol'];
+
+
+    if ($rol === 'Administrador') {
+        $sql = "SELECT * FROM administradores WHERE AdminId = ? AND AdminContra = ? AND AdminRol = 1";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) { die("Error en prepare: " . $conn->error); }
+        $stmt->bind_param("ss", $usuario, $clave);
+    } elseif ($rol === 'Medico') {
+        $sql = "SELECT * FROM medicos WHERE MedIdentificacion = ? AND MedContra = ? AND MedRol = 2";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) { die("Error en prepare: " . $conn->error); }
+        $stmt->bind_param("ss", $usuario, $clave);
+    } elseif ($rol === 'Paciente') {
+        $sql = "SELECT * FROM pacientes WHERE PacIdentificacion = ? AND PacContra = ? AND PacRol = 3";
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) { die("Error en prepare: " . $conn->error); }
+        $stmt->bind_param("ss", $usuario, $clave);
+    } else {
+        $error = "Rol no válido.";
+        $conn->close();
+        return;
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        session_start();
+        $_SESSION['usuario'] = $usuario;
+        $_SESSION['rol'] = $rol;
+        $conn->close();
+        if ($rol == 'Administrador') {
+            header("Location: Vista/html/inicio.php");
+        } elseif ($rol == 'Medico') {
+            header("Location: Vista/html/inicio.php");
+        } elseif ($rol == 'Paciente') {
+            header("Location: Vista/html/inicio.php");
+        }
+        exit();
+    } else {
+        $error = "ID o contraseña incorrectos para $rol.";
+        $conn->close();
+        header("Location: Vista/html/login.php?error=" . urlencode($error));
+        exit();
+    }
+}
+?>

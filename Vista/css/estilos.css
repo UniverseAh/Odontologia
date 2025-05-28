@@ -183,3 +183,25 @@ div#contenido {
     text-align: center;
     margin-bottom: 10px;
 }
+
+/*estilos del cosito del rol del login*/
+.login-box select[name="rol"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    font-size: 1em;
+    background: #f7f7f7;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+
+}
+
+.login-box select[name="rol"]:focus {
+    border-color: #0075ff;
+    box-shadow: 0 0 0 2px #0075ff22;
+}
