@@ -13,13 +13,15 @@ body {
     text-align: justify;
     margin: 10px auto;
     width : 900px ;
+    min-height: calc(100vh - 20px);
+    box-sizing: border-box;
 }
 #encabezado {
     width: 900px;
     height: 150px;
     background : url('../image/banner1.jpg') no-repeat ;
     border:
-     #d3d3d3 1px solid ;
+    #d3d3d3 1px solid ;
 }
 #encabezado h1 {
     text-align: center ;
@@ -204,4 +206,24 @@ div#contenido {
 .login-box select[name="rol"]:focus {
     border-color: #0075ff;
     box-shadow: 0 0 0 2px #0075ff22;
+}
+
+/* Botón de cerrar sesión */
+.logout-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 28px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0;
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.logout-btn:hover {
+    background-color: #0056b3;
 }

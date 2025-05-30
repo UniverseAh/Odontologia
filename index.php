@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+//cosito pa cerrar sesion
 if (isset($_GET['accion']) && $_GET['accion'] == 'logout') {
     session_destroy();
     header('Location: index.php?accion=login');
@@ -48,7 +49,11 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_ME
         $_SESSION['usuario'] = $usuario;
         $_SESSION['rol'] = $rol;
         $conn->close();
-        header('Location: index.php');
+        if ($rol == 'Paciente' || $rol == '3') {
+            header('Location: index.php?accion=panelPaciente');
+        } else {
+            header('Location: index.php');
+        }
         exit;
     } else {
         $error = "Usuario o contraseña incorrectos";
@@ -135,6 +140,13 @@ if (isset($_GET["accion"])) {
             $_POST["MedNombres"],
             $_POST["MedApellidos"]
         );
+    } elseif ($_GET["accion"] == "panelPaciente") {
+        if ($_SESSION['rol'] == 'Paciente' || $_SESSION['rol'] == '3') {
+            $controlador->panelPaciente($_SESSION['usuario']);
+        } else {
+            header('Location: index.php');
+            exit;
+        }
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');

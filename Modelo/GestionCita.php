@@ -151,4 +151,26 @@ CitFecha = '$fecha'"
         $conexion->consulta($sql);
         $conexion->cerrar();
     }
+
+    //Cosito de panel de pacientes
+    public function obtenerCitasPorPaciente($pacienteId)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM citas WHERE CitPaciente = '$pacienteId'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result;
+    }
+    public function obtenerTratamientosPorPaciente($pacienteId)
+    {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM tratamientos WHERE PacIdentificacion = '$pacienteId'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result;
+    }
 }

@@ -122,13 +122,25 @@ class Controlador
         $conexion->cerrar();
         return $result;
     }
+    
+    //panel de paciente
+    public function panelPaciente($pacienteId)
+    {
+        $gestorCita = new GestorCita();
+        $citas = $gestorCita->obtenerCitasPorPaciente($pacienteId);
+        $tratamientos = $gestorCita->obtenerTratamientosPorPaciente($pacienteId);
+        require 'Vista/html/Paciente.php';
+    }
 }
 
 //------------------------login de mrd-----------------------
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+if (
+    $_SERVER['REQUEST_METHOD'] == 'POST' &&
+    isset($_POST['usuario']) &&
+    isset($_POST['clave']) &&
+    isset($_POST['rol'])
+) {
     $conn = new mysqli("localhost", "root", "", "citas");
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);

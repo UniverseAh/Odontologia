@@ -90,7 +90,7 @@
                             </select>
                         </td>
                     </tr>
-                      <tr>
+                    <tr>
                         <td>Hora</td>
                         <td>
                             <select id="hora" name="hora" onmousedown="seleccionarHora()">
@@ -162,6 +162,12 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <form action="index.php?accion=logout" method="post" style="display:inline;">
+        <button type="submit" class="logout-btn">Cerrar sesión</button>
+    </form>
+
 </body>
 
 </html>
