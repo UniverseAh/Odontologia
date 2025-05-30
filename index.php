@@ -19,13 +19,40 @@ if (
 if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuario'];
     $clave = $_POST['clave'];
+    $rol = $_POST['rol'];
 
-    if ($usuario === 'admin' && $clave === 'admin123') {
+    $conn = new mysqli("localhost", "root", "", "citas");
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
+    }
+
+    if ($rol == 'Administrador' || $rol == '1') {
+        $sql = "SELECT * FROM administradores WHERE AdminId = ? AND AdminContra = ? AND AdminRol = 1";
+    } elseif ($rol == 'Medico' || $rol == '2') {
+        $sql = "SELECT * FROM medicos WHERE MedIdentificacion = ? AND MedContra = ? AND MedRol = 2";
+    } elseif ($rol == 'Paciente' || $rol == '3') {
+        $sql = "SELECT * FROM pacientes WHERE PacIdentificacion = ? AND PacContra = ? AND PacRol = 3";
+    } else {
+        $error = "Rol no válido.";
+        $conn->close();
+        include 'Vista/html/login.php';
+        exit;
+    }
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $usuario, $clave);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows == 1) {
         $_SESSION['usuario'] = $usuario;
+        $_SESSION['rol'] = $rol;
+        $conn->close();
         header('Location: index.php');
         exit;
     } else {
         $error = "Usuario o contraseña incorrectos";
+        $conn->close();
         include 'Vista/html/login.php';
         exit;
     }
