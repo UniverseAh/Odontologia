@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Información General</title>
     <link rel="stylesheet" type="text/css" href="Vista/css/estilos.css">
@@ -16,6 +17,7 @@
             <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
             <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
             <li><a href="index.php?accion=medicos">Consultar Médicos</a> </li>
+            <li><a href="index.php?accion=tratamientos">Tratamientos</a> </li>
         </ul>
         <div id="contenido">
             <h2>Información General</h2>
@@ -33,4 +35,5 @@
         <button type="submit" class="logout-btn">Cerrar sesión</button>
     </form>
 </body>
+
 </html>

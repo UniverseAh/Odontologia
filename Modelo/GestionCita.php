@@ -173,4 +173,54 @@ CitFecha = '$fecha'"
         $conexion->cerrar();
         return $result;
     }
+    
+    ///////////// tratamientos
+    public function obtenerTodosLosTratamientos() {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM tratamientos";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        return $result;
+    }
+
+    public function agregarTratamiento($datos) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "INSERT INTO tratamientos (PacDocumento, TraFechaAsignado, TraDescripcion, TraFechaInicio, TraFechaFin, TraObservaciones)
+                VALUES (
+                    '{$datos['PacDocumento']}',
+                    '{$datos['TraFechaAsignado']}',
+                    '{$datos['TraDescripcion']}',
+                    '{$datos['TraFechaInicio']}',
+                    '{$datos['TraFechaFin']}',
+                    '{$datos['TraObservaciones']}'
+                )";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+
+    public function editarTratamiento($id, $datos) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "UPDATE tratamientos SET
+                    PacDocumento = '{$datos['PacDocumento']}',
+                    TraFechaAsignado = '{$datos['TraFechaAsignado']}',
+                    TraDescripcion = '{$datos['TraDescripcion']}',
+                    TraFechaInicio = '{$datos['TraFechaInicio']}',
+                    TraFechaFin = '{$datos['TraFechaFin']}',
+                    TraObservaciones = '{$datos['TraObservaciones']}'
+                WHERE TraNumero = '$id'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+
+    public function eliminarTratamiento($id) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "DELETE FROM tratamientos WHERE TraNumero = '$id'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
 }

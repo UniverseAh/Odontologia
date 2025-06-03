@@ -147,8 +147,31 @@ if (isset($_GET["accion"])) {
             header('Location: index.php');
             exit;
         }
+//////////////////////////////////////////////////////////////////
+    } elseif ($_GET['accion'] == 'tratamientos') {
+        $controlador->listarTratamientos();
+
+    } elseif ($_GET['accion'] == 'mostrarAgregarTratamiento') {
+        include 'Vista/html/agregarTratamiento.php';
+
+    } elseif ($_GET['accion'] == 'agregarTratamiento' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $controlador->agregarTratamiento($_POST);
+    } elseif ($_GET['accion'] == 'mostrarEditarTratamiento' && isset($_GET['id'])) {
+        $gestorCita = new GestorCita();
+    } elseif ($_GET['accion'] == 'editarTratamiento' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+        $controlador->editarTratamiento($_POST['TraNumero'], $_POST);
+    } elseif ($_GET['accion'] == 'eliminarTratamiento' && isset($_GET['id'])) {
+        $controlador->eliminarTratamiento($_GET['id']);
+
+    } elseif ($_GET['accion'] == 'agregarTratamiento') {
+        include 'Vista/html/agregarTratamiento.php';
+        
+    } elseif ($_GET['accion'] == 'editarTratamiento') {
+        include 'Vista/html/editarTratamiento.php';
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
 }
+
+
 ?>

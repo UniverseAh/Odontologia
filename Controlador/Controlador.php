@@ -131,6 +131,34 @@ class Controlador
         $tratamientos = $gestorCita->obtenerTratamientosPorPaciente($pacienteId);
         require 'Vista/html/Paciente.php';
     }
+
+    ///////////// tratamientos
+    public function listarTratamientos() {
+        $gestorCita = new GestorCita();
+        $tratamientos = $gestorCita->obtenerTodosLosTratamientos();
+        require 'Vista/html/listarTratamientos.php';
+    }
+
+    public function agregarTratamiento($datos) {
+        $gestorCita = new GestorCita();
+        $gestorCita->agregarTratamiento($datos);
+        header('Location: index.php?accion=tratamientos');
+        exit;
+    }
+
+    public function editarTratamiento($id, $datos) {
+        $gestorCita = new GestorCita();
+        $gestorCita->editarTratamiento($id, $datos);
+        header('Location: index.php?accion=tratamientos');
+        exit;
+    }
+
+    public function eliminarTratamiento($id) {
+        $gestorCita = new GestorCita();
+        $gestorCita->eliminarTratamiento($id);
+        header('Location: index.php?accion=tratamientos');
+        exit;
+    }
 }
 
 //------------------------login de mrd-----------------------
