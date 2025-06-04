@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Información General</title>
+    <title>Tratamientos</title>
     <link rel="stylesheet" type="text/css" href="Vista/css/estilos.css">
 </head>
 
@@ -20,6 +20,7 @@
             <li><a href="index.php?accion=tratamientos">Tratamientos</a> </li>
         </ul>
         <div id="contenido">
+            <h2>Tratamientos</h2>
             <button onclick="abrirModal('agregar')">Agregar Tratamiento</button>
             <table border="1">
                 <tr>
@@ -65,9 +66,9 @@
     <script>
     function abrirModal(tipo, id = null) {
         let url = '';
-        if (tipo === 'agregar') {
+        if (tipo == 'agregar') {
             url = 'index.php?accion=mostrarAgregarTratamiento';
-        } else if (tipo === 'editar') {
+        } else if (tipo == 'editar') {
             url = 'index.php?accion=mostrarEditarTratamiento&id=' + id;
         }
         fetch(url)
@@ -97,5 +98,4 @@
     </script>
     
 </body>
-
 </html>

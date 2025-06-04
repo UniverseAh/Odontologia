@@ -9,8 +9,8 @@
     <form action="index.php?accion=editarTratamiento" method="post">
         <input type="hidden" name="TraNumero" value="<?= htmlspecialchars($tratamiento['TraNumero']) ?>">
 
-        <label>Documento del Paciente:</label>
-        <input type="text" name="PacDocumento" value="<?= htmlspecialchars($tratamiento['PacDocumento']) ?>" required><br><br>
+        <label>ID Paciente:</label>
+        <input type="text" name="TraPaciente" value="<?= htmlspecialchars($tratamiento['TraPaciente']) ?>" required><br><br>
 
         <label>Fecha Asignado:</label>
         <input type="date" name="TraFechaAsignado" value="<?= htmlspecialchars($tratamiento['TraFechaAsignado']) ?>" required><br><br>

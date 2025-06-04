@@ -265,3 +265,18 @@ div#contenido {
     color: #000;
 }
 
+#contenido > button,
+button.agregar-tratamiento {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 22px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(24,90,157,0.10);
+}
+

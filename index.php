@@ -158,6 +158,8 @@ if (isset($_GET["accion"])) {
         $controlador->agregarTratamiento($_POST);
     } elseif ($_GET['accion'] == 'mostrarEditarTratamiento' && isset($_GET['id'])) {
         $gestorCita = new GestorCita();
+        $tratamiento = $gestorCita->obtenerTratamientoPorId($_GET['id']);
+        include 'Vista/html/editarTratamiento.php';
     } elseif ($_GET['accion'] == 'editarTratamiento' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $controlador->editarTratamiento($_POST['TraNumero'], $_POST);
     } elseif ($_GET['accion'] == 'eliminarTratamiento' && isset($_GET['id'])) {

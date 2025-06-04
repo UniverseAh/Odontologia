@@ -188,9 +188,9 @@ CitFecha = '$fecha'"
     public function agregarTratamiento($datos) {
         $conexion = new Conexion();
         $conexion->abrir();
-        $sql = "INSERT INTO tratamientos (PacDocumento, TraFechaAsignado, TraDescripcion, TraFechaInicio, TraFechaFin, TraObservaciones)
+        $sql = "INSERT INTO tratamientos (TraPaciente, TraFechaAsignado, TraDescripcion, TraFechaInicio, TraFechaFin, TraObservaciones)
                 VALUES (
-                    '{$datos['PacDocumento']}',
+                    '{$datos['TraPaciente']}',
                     '{$datos['TraFechaAsignado']}',
                     '{$datos['TraDescripcion']}',
                     '{$datos['TraFechaInicio']}',
@@ -205,13 +205,13 @@ CitFecha = '$fecha'"
         $conexion = new Conexion();
         $conexion->abrir();
         $sql = "UPDATE tratamientos SET
-                    PacDocumento = '{$datos['PacDocumento']}',
-                    TraFechaAsignado = '{$datos['TraFechaAsignado']}',
-                    TraDescripcion = '{$datos['TraDescripcion']}',
-                    TraFechaInicio = '{$datos['TraFechaInicio']}',
-                    TraFechaFin = '{$datos['TraFechaFin']}',
-                    TraObservaciones = '{$datos['TraObservaciones']}'
-                WHERE TraNumero = '$id'";
+                TraPaciente = '{$datos['TraPaciente']}',
+                TraFechaAsignado = '{$datos['TraFechaAsignado']}',
+                TraDescripcion = '{$datos['TraDescripcion']}',
+                TraFechaInicio = '{$datos['TraFechaInicio']}',
+                TraFechaFin = '{$datos['TraFechaFin']}',
+                TraObservaciones = '{$datos['TraObservaciones']}'
+            WHERE TraNumero = '$id'";
         $conexion->consulta($sql);
         $conexion->cerrar();
     }
@@ -222,5 +222,22 @@ CitFecha = '$fecha'"
         $sql = "DELETE FROM tratamientos WHERE TraNumero = '$id'";
         $conexion->consulta($sql);
         $conexion->cerrar();
+    }
+
+    public function obtenerTratamientoPorId($id) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM tratamientos WHERE TraNumero = '$id'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+
+        if ($result instanceof mysqli_result) {
+            return $result->fetch_assoc();
+        }
+        if (is_array($result) && count($result) > 0) {
+            return $result[0];
+        }
+        return [];
     }
 }

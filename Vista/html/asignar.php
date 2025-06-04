@@ -27,7 +27,6 @@
         </ul>
         <div id="contenido">
             <h2>Asignar cita</h2>
-            <p>Contenido de la página</p>
             <form id="frmasignar" action="index.php?accion=guardarCita" method="post">
                 <table>
                     <tr>

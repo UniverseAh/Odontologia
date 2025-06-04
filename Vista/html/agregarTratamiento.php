@@ -7,8 +7,8 @@
 <body>
     <h2>Agregar Tratamiento</h2>
     <form action="index.php?accion=agregarTratamiento" method="post">
-        <label>Documento del Paciente:</label>
-        <input type="text" name="PacDocumento" required><br><br>
+        <label>ID Paciente:</label>
+        <input type="text" name="TraPaciente" required><br><br>
 
         <label>Fecha Asignado:</label>
         <input type="date" name="TraFechaAsignado" required><br><br>
