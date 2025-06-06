@@ -5,6 +5,7 @@ class Controlador
     {
         require_once $ruta;
     }
+    ////////Citas
     public function agregarCita($doc, $med, $fec, $hor, $con)
     {
         $cita = new Cita(
@@ -34,6 +35,7 @@ class Controlador
         $result = $gestorCita->consultarCitasPorDocumento($doc);
         require_once 'Vista/html/cancelarCitas.php';
     }
+    ///////pacientes
     public function consultarPaciente($doc)
     {
         $gestorCita = new GestorCita();
@@ -58,6 +60,7 @@ class Controlador
         $result2 = $gestorCita->consultarConsultorios();
         require_once 'Vista/html/asignar.php';
     }
+    //////////horas
     public function consultarHorasDisponibles($medico, $fecha)
     {
         $gestorCita = new GestorCita();
@@ -83,6 +86,7 @@ class Controlador
             echo "Hubo un error al cancelar la cita";
         }
     }
+    /////////////medicos
     public function listarMedicos()
     {
         $gestorCita = new GestorCita();
@@ -159,7 +163,59 @@ class Controlador
         header('Location: index.php?accion=tratamientos');
         exit;
     }
+
+    //////Consultorios
+    public function mostrarConsultorio($editarNumero = null)
+    {
+        $gestorCita = new GestorCita();
+        $result = $gestorCita->consultarConsultorios();
+        $consultorioEditar = null;
+        if ($editarNumero) {
+            $consultorioEditar = $gestorCita->consultarConsultorioPorNumero($editarNumero);
+        }
+        require 'Vista/html/consultorio.php';
+    }
+    public function eliminarConsultorio($numero)
+    {
+        $gestorCita = new GestorCita();
+        if ($gestorCita->tieneCitasAgendadas($numero)) {
+            $mensaje = "Error, No se puede eliminar consultorio.";
+        } else {
+            $gestorCita->eliminarConsultorio($numero);
+            $mensaje = "Consultorio eliminado";
+        }
+        $result = $gestorCita->consultarConsultorios();
+        require 'Vista/html/consultorio.php';
+    }
+    public function editarConsultorio($numero)
+    {
+        $gestorCita = new GestorCita();
+        $consultorio = $gestorCita->consultarConsultorioPorNumero($numero);
+        require 'Vista/html/editarConsultorio.php';
+    }
+
+    public function actualizarConsultorio($numero, $nombre)
+    {
+        $gestorCita = new GestorCita();
+        $gestorCita->actualizarConsultorio($numero, $nombre);
+        $result = $gestorCita->consultarConsultorios();
+        $mensaje = "Consultorio actualizado";
+        require 'Vista/html/consultorio.php';
+    }
+    public function agregarConsultorio($numero, $nombre)
+    {
+        $gestorCita = new GestorCita();
+        if ($gestorCita->existeConsultorioPorNumero($numero)) {
+            $mensaje = "Error, ya existe un consultorio con ese número.";
+        } else {
+            $gestorCita->agregarConsultorio($numero, $nombre);
+            $mensaje = "Consultorio agregado";
+        }
+        $result = $gestorCita->consultarConsultorios();
+        require 'Vista/html/consultorio.php';
+    }
 }
+
 
 //------------------------login de mrd-----------------------
 
@@ -223,4 +279,7 @@ if (
         exit();
     }
 }
+
+
+
 ?>

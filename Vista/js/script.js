@@ -85,3 +85,25 @@ function confirmarCancelar(numero) {
   }
   $("#cancelarConsultar").trigger("click");
 }
+
+$(document).ready(function () {
+  var btnAgregar = document.getElementById("btnAgregarConsultorio");
+  var formAgregar = document.getElementById("formAgregarConsultorio");
+  if (btnAgregar && formAgregar) {
+    btnAgregar.onclick = function () {
+      formAgregar.style.display = "block";
+      btnAgregar.style.display = "none";
+    };
+  }
+});
+document.getElementById("btnAgregarConsultorio").onclick = function () {
+  var form = document.getElementById("formAgregarConsultorio");
+  form.classList.add("show");
+  this.style.display = "none";
+};
+document.getElementById("btnCancelarAgregar").onclick = function () {
+  var form = document.getElementById("formAgregarConsultorio");
+  form.classList.remove("show");
+  document.getElementById("btnAgregarConsultorio").style.display =
+    "inline-block";
+};

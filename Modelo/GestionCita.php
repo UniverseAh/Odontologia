@@ -174,7 +174,7 @@ CitFecha = '$fecha'"
         return $result;
     }
     
-    ///////////// tratamientos
+    ///////////////////// tratamientos
     public function obtenerTodosLosTratamientos() {
         $conexion = new Conexion();
         $conexion->abrir();
@@ -239,5 +239,79 @@ CitFecha = '$fecha'"
             return $result[0];
         }
         return [];
+    }
+    /////////////////////cosito de consultorios
+    public function consultarConsultorioPorNumero($numero) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT * FROM consultorios WHERE ConNumero = '$numero'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+
+        if ($result instanceof mysqli_result) {
+            return $result->fetch_object(); // Devuelve un objeto consultorio
+        }
+        if (is_array($result) && count($result) > 0) {
+            return (object)$result[0]; // Convierte array a objeto
+        }
+        return null;
+    }
+    public function tieneCitasAgendadas($consultorioNumero) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT COUNT(*) as total FROM citas WHERE CitConsultorio = '$consultorioNumero'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        // Si hay al menos una cita, retorna true
+        if (is_array($result) && isset($result[0]['total'])) {
+            return $result[0]['total'] > 0;
+        }
+        // Si obtenerResult devuelve un mysqli_result:
+        if ($result instanceof mysqli_result) {
+            $row = $result->fetch_assoc();
+            return $row['total'] > 0;
+        }
+        return false;
+    }
+    public function eliminarConsultorio($numero) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "DELETE FROM consultorios WHERE ConNumero = '$numero'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+    public function actualizarConsultorio($numero, $nombre) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "UPDATE consultorios SET ConNombre = '$nombre' WHERE ConNumero = '$numero'";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
+    }
+    public function existeConsultorioPorNumero($numero) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "SELECT COUNT(*) as total FROM consultorios WHERE ConNumero = '$numero'";
+        $conexion->consulta($sql);
+        $result = $conexion->obtenerResult();
+        $conexion->cerrar();
+        // Si obtenerResult devuelve un array:
+        if (is_array($result) && isset($result[0]['total'])) {
+            return $result[0]['total'] > 0;
+        }
+        // Si obtenerResult devuelve un mysqli_result:
+        if ($result instanceof mysqli_result) {
+            $row = $result->fetch_assoc();
+            return $row['total'] > 0;
+        }
+        return false;
+    }
+    public function agregarConsultorio($numero, $nombre) {
+        $conexion = new Conexion();
+        $conexion->abrir();
+        $sql = "INSERT INTO consultorios (ConNumero, ConNombre) VALUES ('$numero', '$nombre')";
+        $conexion->consulta($sql);
+        $conexion->cerrar();
     }
 }

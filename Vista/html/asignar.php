@@ -19,11 +19,12 @@
         </div>
         <ul id="menu">
             <li><a href="index.php">inicio</a> </li>
-            <li class="activa"><a href="index.php?accion=asignar">Asignar</a> </li>
+            <li class="activa"><a href="index.php?accion=asignar">Asignar</a></li>
             <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
             <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
-            <li><a href="index.php?accion=medicos">Consultar Medicos</a> </li>
+            <li><a href="index.php?accion=medicos">Consultar Médicos</a> </li>
             <li><a href="index.php?accion=tratamientos">Tratamientos</a> </li>
+            <li><a href="index.php?accion=consultorio">Consultorios</a> </li>
         </ul>
         <div id="contenido">
             <h2>Asignar cita</h2>

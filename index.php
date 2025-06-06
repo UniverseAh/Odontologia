@@ -90,7 +90,6 @@ if (isset($_GET["accion"])) {
     } elseif ($_GET["accion"] == "guardarCita") {
         $controlador->agregarCita(
             $_POST["asignarDocumento"],
-
             $_POST["medico"],
             $_POST["fecha"],
             $_POST["hora"],
@@ -116,9 +115,9 @@ if (isset($_GET["accion"])) {
         $controlador->verCita($_GET["numero"]);
     } elseif ($_GET["accion"] == "confirmarCancelar") {
         $controlador->confirmarCancelarCita($_GET["numero"]);
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'medicos') {
+    } elseif ($_GET['accion'] == 'medicos') {
         $controlador->listarMedicos();
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'agregarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    } elseif ($_GET['accion'] == 'agregarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $controlador->agregarMedico(
             $_POST["MedIdentificacion"],
             $_POST["MedNombres"],
@@ -126,34 +125,36 @@ if (isset($_GET["accion"])) {
         );
         header('Location: index.php?accion=medicos');
         exit;
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'eliminarMedico' && isset($_GET['id'])) {
+    } elseif ($_GET['accion'] == 'eliminarMedico' && isset($_GET['id'])) {
         $controlador->eliminarMedico($_GET["id"]);
         header('Location: index.php?accion=medicos');
         exit;
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'editarMedico' && isset($_GET['id'])) {
+    } elseif ($_GET['accion'] == 'editarMedico' && isset($_GET['id'])) {
         $controlador->editarMedico($_GET["id"]);
         header('Location: index.php?accion=medicos');
         exit;
-    } elseif (isset($_GET['accion']) && $_GET['accion'] == 'actualizarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    } elseif ($_GET['accion'] == 'actualizarMedico' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $controlador->actualizarMedico(
             $_POST["MedIdentificacion"],
             $_POST["MedNombres"],
             $_POST["MedApellidos"]
         );
-    } elseif ($_GET["accion"] == "panelPaciente") {
-        if ($_SESSION['rol'] == 'Paciente' || $_SESSION['rol'] == '3') {
-            $controlador->panelPaciente($_SESSION['usuario']);
-        } else {
-            header('Location: index.php');
-            exit;
-        }
-//////////////////////////////////////////////////////////////////
+        ///////consultorios y tratamientos
+    } elseif ($_GET["accion"] == "consultorio") {
+        $editarNumero = isset($_GET["editar"]) ? $_GET["editar"] : null;
+        $controlador->mostrarConsultorio($editarNumero);
+    } elseif ($_GET["accion"] == "eliminarConsultorio") {
+        $controlador->eliminarConsultorio($_GET["numero"]);
+    } elseif ($_GET["accion"] == "editarConsultorio") {
+        $controlador->editarConsultorio($_GET["numero"]);
+    } elseif ($_GET["accion"] == "actualizarConsultorio") {
+        $controlador->actualizarConsultorio($_GET["numero"], $_GET["nombre"]);
+    } elseif ($_GET["accion"] == "agregarConsultorio") {
+        $controlador->agregarConsultorio($_GET["numero"], $_GET["nombre"]);
     } elseif ($_GET['accion'] == 'tratamientos') {
         $controlador->listarTratamientos();
-
     } elseif ($_GET['accion'] == 'mostrarAgregarTratamiento') {
         include 'Vista/html/agregarTratamiento.php';
-
     } elseif ($_GET['accion'] == 'agregarTratamiento' && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $controlador->agregarTratamiento($_POST);
     } elseif ($_GET['accion'] == 'mostrarEditarTratamiento' && isset($_GET['id'])) {
@@ -164,16 +165,21 @@ if (isset($_GET["accion"])) {
         $controlador->editarTratamiento($_POST['TraNumero'], $_POST);
     } elseif ($_GET['accion'] == 'eliminarTratamiento' && isset($_GET['id'])) {
         $controlador->eliminarTratamiento($_GET['id']);
-
     } elseif ($_GET['accion'] == 'agregarTratamiento') {
         include 'Vista/html/agregarTratamiento.php';
-        
     } elseif ($_GET['accion'] == 'editarTratamiento') {
         include 'Vista/html/editarTratamiento.php';
+    } elseif ($_GET['accion'] == 'consultorio') {
+        include 'Vista/html/consultorio.php';
+    }
+} elseif (isset($_GET["accion"]) && $_GET["accion"] == "panelPaciente") {
+    if ($_SESSION['rol'] == 'Paciente' || $_SESSION['rol'] == '3') {
+        $controlador->panelPaciente($_SESSION['usuario']);
+    } else {
+        header('Location: index.php');
+        exit;
     }
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
 }
-
-
 ?>
