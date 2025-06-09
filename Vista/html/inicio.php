@@ -1,3 +1,8 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,13 +17,21 @@
             <h1>Sistema de Gestión Odontológica</h1>
         </div>
         <ul id="menu">
-            <li class="activa"> <a href="index.php">inicio</a> </li>
-            <li><a href="index.php?accion=asignar">Asignar</a> </li>
-            <li><a href="index.php?accion=consultar">Consultar Cita</a> </li>
-            <li><a href="index.php?accion=cancelar">Cancelar Cita</a> </li>
-            <li><a href="index.php?accion=medicos">Consultar Médicos</a> </li>
-            <li><a href="index.php?accion=tratamientos">Tratamientos</a> </li>
-            <li><a href="index.php?accion=consultorio">Consultorios</a> </li>
+            <li><a href="index.php">inicio</a></li>
+        <?php if ($_SESSION['rol'] == 1): // Admin ?>
+            <li><a href="index.php?accion=asignar">Asignar</a></li>
+            <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
+            <li><a href="index.php?accion=cancelar">Cancelar Cita</a></li>
+            <li><a href="index.php?accion=medicos">Consultar Médicos</a></li>
+            <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
+            <li><a href="index.php?accion=consultorio">Consultorios</a></li>
+        <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
+            <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
+            <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
+        <?php elseif ($_SESSION['rol'] == 3): // Paciente ?>
+            <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
+            <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
+        <?php endif; ?>
         </ul>
         <div id="contenido">
             <h2>Información General</h2>

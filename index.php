@@ -20,24 +20,32 @@ if (
 if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuario'];
     $clave = $_POST['clave'];
-    $rol = $_POST['rol'];
+    $rolTexto = $_POST['rol'];
 
     $conn = new mysqli("localhost", "root", "", "citas");
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    if ($rol == 'Administrador' || $rol == '1') {
-        $sql = "SELECT * FROM administradores WHERE AdminId = ? AND AdminContra = ? AND AdminRol = 1";
-    } elseif ($rol == 'Medico' || $rol == '2') {
-        $sql = "SELECT * FROM medicos WHERE MedIdentificacion = ? AND MedContra = ? AND MedRol = 2";
-    } elseif ($rol == 'Paciente' || $rol == '3') {
-        $sql = "SELECT * FROM pacientes WHERE PacIdentificacion = ? AND PacContra = ? AND PacRol = 3";
-    } else {
-        $error = "Rol no válido.";
-        $conn->close();
-        include 'Vista/html/login.php';
-        exit;
+    // cosito para validar el rol
+    switch ($rolTexto) {
+        case 'Administrador':
+            $_SESSION['rol'] = 1;
+            $sql = "SELECT * FROM administradores WHERE AdminId = ? AND AdminContra = ? AND AdminRol = 1";
+            break;
+        case 'Medico':
+            $_SESSION['rol'] = 2;
+            $sql = "SELECT * FROM medicos WHERE MedIdentificacion = ? AND MedContra = ? AND MedRol = 2";
+            break;
+        case 'Paciente':
+            $_SESSION['rol'] = 3;
+            $sql = "SELECT * FROM pacientes WHERE PacIdentificacion = ? AND PacContra = ? AND PacRol = 3";
+            break;
+        default:
+            $error = "Rol no válido.";
+            $conn->close();
+            include 'Vista/html/login.php';
+            exit;
     }
 
     $stmt = $conn->prepare($sql);
@@ -47,9 +55,8 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_ME
 
     if ($result && $result->num_rows == 1) {
         $_SESSION['usuario'] = $usuario;
-        $_SESSION['rol'] = $rol;
         $conn->close();
-        if ($rol == 'Paciente' || $rol == '3') {
+        if ($_SESSION['rol'] == 'Paciente' || $_SESSION['rol'] == '3') {
             header('Location: index.php?accion=panelPaciente');
         } else {
             header('Location: index.php');
