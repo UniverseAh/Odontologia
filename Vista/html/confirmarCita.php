@@ -26,6 +26,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
+                <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
             <?php elseif ($_SESSION['rol'] == 3): // Paciente ?>
@@ -87,7 +88,22 @@ if (session_status() == PHP_SESSION_NONE) {
                     <td><?php echo $fila->CitObservaciones; ?></td>
                 </tr>
             </table>
+            <form action="index.php?accion=descargarCitaPDF" method="post" target="_blank" style="margin-top:20px;">
+                <input type="hidden" name="CitNumero" value="<?php echo $fila->CitNumero; ?>">
+                <button type="submit">Descargar PDF de la Cita</button>
+            </form>
+            <?php if ($_SESSION['rol'] == 2): // Solo para Médico ?>
+                <form action="index.php?accion=enviarCorreoCita" method="post" style="margin-top:20px;">
+                    <input type="hidden" name="CitNumero" value="<?php echo $fila->CitNumero; ?>">
+                    <label for="correo_destino">Correo destino:</label>
+                    <input type="email" name="correo_destino" id="correo_destino" required>
+                    <button type="submit">Enviar Gmail con datos de la cita</button>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
+    <form action="index.php?accion=logout" method="post">
+        <button type="submit" class="logout-btn">Cerrar sesión</button>
+    </form>
 </body>
 </html>

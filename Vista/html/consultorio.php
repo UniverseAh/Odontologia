@@ -33,6 +33,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
+                <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
             <?php elseif ($_SESSION['rol'] == 3): // Paciente ?>
@@ -93,10 +94,8 @@ if (session_status() == PHP_SESSION_NONE) {
             <!-- Botón para mostrar el formulario -->
             <div class="lado-derecho">
                 <button id="btnAgregarConsultorio" type="button" style="margin-bottom:15px;">Agregar consultorio</button>
-                <!-- Panel derecho con formulario -->
                 <div id="panel-derecho-consultorio">
-                    
-                    <!-- Formulario oculto para agregar consultorio -->
+                    <!-- Formulario escondio para agregar consultorio -->
                     <form id="formAgregarConsultorio" action="index.php" method="get" style="display:none; margin-bottom:20px;">
                         <input type="hidden" name="accion" value="agregarConsultorio">
                         <label>Numero del consultorio:</label>

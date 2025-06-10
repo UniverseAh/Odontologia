@@ -164,6 +164,7 @@ class Controlador
         exit;
     }
 
+
     //////Consultorios
     public function mostrarConsultorio($editarNumero = null)
     {
@@ -279,7 +280,11 @@ if (
         exit();
     }
 }
-
-
-
+/////////////// 
+if (isset($_SESSION['rol']) && $_SESSION['rol'] == 3 && isset($_GET['accion']) && $_GET['accion'] == 'tratamientos') {
+    require_once 'Modelo/Tratamientos.php';
+    $tratamientos = obtenerTratamientosPorPaciente($_SESSION['usuario']);
+    include 'Vista/html/listarTratamientos.php';
+    exit;
+}
 ?>

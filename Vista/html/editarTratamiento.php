@@ -15,7 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <input type="hidden" name="TraNumero" value="<?= htmlspecialchars($tratamiento['TraNumero']) ?>">
 
         <label>ID Paciente:</label>
-        <input type="text" name="TraPaciente" value="<?= htmlspecialchars($tratamiento['TraPaciente']) ?>" required><br><br>
+        <input type="text" name="TraPaciente" value="<?= htmlspecialchars($trat['TraPaciente']) ?>" required><br><br>
 
         <label>Fecha Asignado:</label>
         <input type="date" name="TraFechaAsignado" value="<?= htmlspecialchars($tratamiento['TraFechaAsignado']) ?>" required><br><br>

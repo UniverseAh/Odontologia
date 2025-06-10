@@ -26,6 +26,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
+                <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
             <?php elseif ($_SESSION['rol'] == 3): // Paciente ?>
@@ -35,7 +36,16 @@ if (session_status() == PHP_SESSION_NONE) {
         </ul>
         <div id="contenido">
             <h2>Tratamientos</h2>
-            <button onclick="abrirModal('agregar')">Agregar Tratamiento</button>
+            <?php if ($_SESSION['rol'] != 3): // buscador Solo para Admin y Médico ?>
+                <button onclick="abrirModal('agregar')">Agregar Tratamiento</button>
+            <?php endif; ?>
+            <?php if ($_SESSION['rol'] != 3)://pa que al paciente no le salga el buscador?>
+            <form method="get" action="index.php" style="margin-bottom: 15px;">
+                <input type="hidden" name="accion" value="tratamientos">
+                <input type="text" name="buscar_paciente" placeholder="Buscar por ID de paciente" value="<?= isset($_GET['buscar_paciente']) ? htmlspecialchars($_GET['buscar_paciente']) : '' ?>">
+                <button type="submit">Buscar</button>
+            </form>
+            <?php endif; ?>
             <table border="1">
                 <tr>
                     <th>ID Paciente</th>
@@ -48,7 +58,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 </tr>
                 <?php foreach ($tratamientos as $trat): ?>
                 <tr>
-                    <td><?= htmlspecialchars($trat['TraPaciente'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($trat['TraPaciente']) ?></td>
                     <td><?= htmlspecialchars($trat['TraFechaAsignado']) ?></td>
                     <td><?= htmlspecialchars($trat['TraDescripcion']) ?></td>
                     <td><?= htmlspecialchars($trat['TraFechaInicio']) ?></td>
