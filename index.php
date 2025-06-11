@@ -185,6 +185,10 @@ if (isset($_GET["accion"])) {
         include 'Vista/html/editarTratamiento.php';
     } elseif ($_GET['accion'] == 'consultorio') {
         include 'Vista/html/consultorio.php';
+        //////////////cosito pa descargar el excel
+    } elseif ($_GET["accion"] == "descargarExcelCitas" && $_SESSION['rol'] == 1) {
+        require_once 'Modelo/ExportarExcel.php';
+        exportarCitasExcel();
     }
 } elseif (isset($_GET["accion"]) && $_GET["accion"] == "panelPaciente") {
     if ($_SESSION['rol'] == 'Paciente' || $_SESSION['rol'] == '3') {

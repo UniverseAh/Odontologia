@@ -264,11 +264,10 @@ CitFecha = '$fecha'"
         $conexion->consulta($sql);
         $result = $conexion->obtenerResult();
         $conexion->cerrar();
-        // Si hay al menos una cita, retorna true
+        /////////////// Si hay al menos una cita devuelve true
         if (is_array($result) && isset($result[0]['total'])) {
             return $result[0]['total'] > 0;
         }
-        // Si obtenerResult devuelve un mysqli_result:
         if ($result instanceof mysqli_result) {
             $row = $result->fetch_assoc();
             return $row['total'] > 0;
@@ -296,11 +295,10 @@ CitFecha = '$fecha'"
         $conexion->consulta($sql);
         $result = $conexion->obtenerResult();
         $conexion->cerrar();
-        // Si obtenerResult devuelve un array:
+        ///////////// Si obtenerResult devuelve un array
         if (is_array($result) && isset($result[0]['total'])) {
             return $result[0]['total'] > 0;
         }
-        // Si obtenerResult devuelve un mysqli_result:
         if ($result instanceof mysqli_result) {
             $row = $result->fetch_assoc();
             return $row['total'] > 0;

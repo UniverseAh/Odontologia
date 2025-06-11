@@ -38,8 +38,7 @@ if (session_status() == PHP_SESSION_NONE) {
     } else {
     ?>
         <p>El paciente no existe en la base de datos.</p>
-        <input type="button" name="ingPaciente" id="ingPaciente" value="Ingresar
-Paciente" onclick="mostrarFormulario()">
+        <input type="button" name="ingPaciente" id="ingPaciente" value="Ingresar Paciente" onclick="mostrarFormulario()">
     <?php
     }
     ?>

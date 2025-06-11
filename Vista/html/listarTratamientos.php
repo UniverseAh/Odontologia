@@ -25,6 +25,8 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=medicos">Consultar Médicos</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
+                <!-- Cambiar el enlace directo por un botón con onclick -->
+            <li><a href="#" onclick="confirmarDescarga(event)" class="btn-excel">Descargar Excel</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
                 <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
@@ -36,7 +38,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </ul>
         <div id="contenido">
             <h2>Tratamientos</h2>
-            <?php if ($_SESSION['rol'] != 3): // buscador Solo para Admin y Médico ?>
+            <?php if ($_SESSION['rol'] != 3): // cosito de agregar Solo para Admin y Médico ?>
                 <button onclick="abrirModal('agregar')">Agregar Tratamiento</button>
             <?php endif; ?>
             <?php if ($_SESSION['rol'] != 3)://pa que al paciente no le salga el buscador?>
@@ -54,7 +56,9 @@ if (session_status() == PHP_SESSION_NONE) {
                     <th>Fecha Inicio</th>
                     <th>Fecha Fin</th>
                     <th>Observaciones</th>
-                    <th>Acciones</th>
+                    <?php if ($_SESSION['rol'] != 3): //////// mostrar columna si NO es paciente ?>
+                        <th>Acciones</th>
+                    <?php endif; ?>
                 </tr>
                 <?php foreach ($tratamientos as $trat): ?>
                 <tr>
@@ -64,10 +68,12 @@ if (session_status() == PHP_SESSION_NONE) {
                     <td><?= htmlspecialchars($trat['TraFechaInicio']) ?></td>
                     <td><?= htmlspecialchars($trat['TraFechaFin']) ?></td>
                     <td><?= htmlspecialchars($trat['TraObservaciones']) ?></td>
-                    <td>
-                        <button onclick="abrirModal('editar', <?= $trat['TraNumero'] ?>)">Editar</button>
-                        <button onclick="eliminarTratamiento(<?= $trat['TraNumero'] ?>)">Eliminar</button>
-                    </td>
+                    <?php if ($_SESSION['rol'] != 3): //////////  mostrar botones si NO es paciente ?>
+                        <td>
+                            <button onclick="abrirModal('editar', <?= $trat['TraNumero'] ?>)">Editar</button>
+                            <button onclick="eliminarTratamiento(<?= $trat['TraNumero'] ?>)">Eliminar</button>
+                        </td>
+                    <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
             </table>
@@ -110,6 +116,13 @@ if (session_status() == PHP_SESSION_NONE) {
     function eliminarTratamiento(id) {
         if (confirm('¿Eliminar este tratamiento?')) {
             window.location.href = 'index.php?accion=eliminarTratamiento&id=' + id;
+        }
+    }
+    ///////// cosito del excel
+    function confirmarDescarga(event) {
+        event.preventDefault();
+        if (confirm('¿Desea descargar el archivo Excel con todas las citas?')) {
+            window.location.href = 'index.php?accion=descargarExcelCitas';
         }
     }
 

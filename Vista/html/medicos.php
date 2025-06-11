@@ -24,6 +24,8 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=medicos">Consultar Médicos</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
+                <!-- Cambiar el enlace directo por un botón con onclick -->
+            <li><a href="#" onclick="confirmarDescarga(event)" class="btn-excel">Descargar Excel</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
                 <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
@@ -103,6 +105,13 @@ if (session_status() == PHP_SESSION_NONE) {
     function cerrarModal() {
         document.getElementById('editarMedicoModal').style.display = 'none';
         document.getElementById('modalOverlay').style.display = 'none';
+    }
+///////// cosito del excel
+    function confirmarDescarga(event) {
+        event.preventDefault();
+        if (confirm('¿Desea descargar el archivo Excel con todas las citas?')) {
+            window.location.href = 'index.php?accion=descargarExcelCitas';
+        }
     }
     </script>
 </body>

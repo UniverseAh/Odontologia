@@ -25,13 +25,15 @@ if (session_status() == PHP_SESSION_NONE) {
 
         <ul id="menu">
             <li><a href="index.php">inicio</a></li>
-            <?php if ($_SESSION['rol'] == 1): // Admin ?>
+            <?php if ($_SESSION['rol'] == 1): /// Admin ?>
                 <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
                 <li><a href="index.php?accion=cancelar">Cancelar Cita</a></li>
                 <li><a href="index.php?accion=medicos">Consultar Médicos</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
+                <!-- Cambiar el enlace directo por un botón con onclick -->
+            <li><a href="#" onclick="confirmarDescarga(event)" class="btn-excel">Descargar Excel</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
                 <li><a href="index.php?accion=asignar">Asignar</a></li>
                 <li><a href="index.php?accion=consultar">Consultar Cita</a></li>
@@ -91,7 +93,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     }
                 ?>
             </div>    
-            <!-- Botón para mostrar el formulario -->
+            <!-- Botón pa mostrar el formulario -->
             <div class="lado-derecho">
                 <button id="btnAgregarConsultorio" type="button" style="margin-bottom:15px;">Agregar consultorio</button>
                 <div id="panel-derecho-consultorio">
@@ -128,5 +130,14 @@ if (session_status() == PHP_SESSION_NONE) {
     <form action="index.php?accion=logout" method="post" style="display:inline;">
         <button type="submit" class="logout-btn">Cerrar sesión</button>
     </form>
+    <script>
+    ///////// cosito del excel
+    function confirmarDescarga(event) {
+        event.preventDefault();
+        if (confirm('¿Desea descargar el archivo Excel con todas las citas?')) {
+            window.location.href = 'index.php?accion=descargarExcelCitas';
+        }
+    }
+    </script>
 </body>
 </html>
