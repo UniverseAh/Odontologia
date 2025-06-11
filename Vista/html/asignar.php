@@ -52,9 +52,14 @@ if (session_status() == PHP_SESSION_NONE) {
                                 td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="button" value="Consultar" name="asignarConsultar"
-                                id="asignarConsultar" onclick="consultarPaciente()"></td>
-                    </tr>
+                        <td colspan="2">
+                            <input type="button" 
+                                value="Consultar" 
+                                name="asignarConsultar"
+                                id="asignarConsultar" 
+                                onclick="consultarPaciente()">
+    </td>
+</tr>
                     <tr>
                         <td colspan="2">
                             <div id="paciente"></div>
@@ -171,7 +176,6 @@ if (session_status() == PHP_SESSION_NONE) {
                                         selected="selected">--Selecione el sexo ---</option>
                                     <option value="M">Masculino</option>
                                     <option value="F">Femenino</option>
-
                                 </select>
                             </td>
                         </tr>

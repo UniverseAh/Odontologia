@@ -46,8 +46,7 @@ class GestorCita
         $conexion = new Conexion();
         $conexion->abrir();
         $sql = "SELECT pacientes.* , medicos.*, consultorios.*, citas.*"
-            . "FROM Pacientes as pacientes, Medicos as medicos, Consultorios
-as consultorios ,citas "
+            . "FROM Pacientes as pacientes, Medicos as medicos, Consultorios  as consultorios ,citas "
             . "WHERE citas.CitPaciente = pacientes.PacIdentificacion "
             . " AND citas.CitMedico = medicos.MedIdentificacion "
             . " AND citas.CitNumero = $id";
@@ -88,8 +87,7 @@ as consultorios ,citas "
         $conexion = new Conexion();
         $conexion->abrir();
         $sql = "SELECT hora FROM horas WHERE hora NOT IN "
-            . "( SELECT CitHora FROM citas WHERE CitMedico = '$medico' AND
-CitFecha = '$fecha'"
+            . "( SELECT CitHora FROM citas WHERE CitMedico = '$medico' AND CitFecha = '$fecha'"
             . " AND CitEstado = 'Solicitada') ";
         $conexion->consulta($sql);
         $result = $conexion->obtenerResult();

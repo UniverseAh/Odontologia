@@ -24,7 +24,7 @@ if (
     exit;
 }
 
-/////////////////// Login de mrd
+/////////////////// Login
 if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuario'];
     $clave = $_POST['clave'];
@@ -35,7 +35,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'login' && $_SERVER['REQUEST_ME
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    // cosito para validar el rol
+//////////////////// cosito para validar el rol
     switch ($rolTexto) {
         case 'Administrador':
             $sql = "SELECT * FROM administradores WHERE AdminId = ? AND AdminContra = ? AND AdminRol = 1";
@@ -185,7 +185,8 @@ if (isset($_GET["accion"])) {
         include 'Vista/html/editarTratamiento.php';
     } elseif ($_GET['accion'] == 'consultorio') {
         include 'Vista/html/consultorio.php';
-        //////////////cosito pa descargar el excel
+
+//////////////////cosito pa descargar el excel
     } elseif ($_GET["accion"] == "descargarExcelCitas" && $_SESSION['rol'] == 1) {
         require_once 'Modelo/ExportarExcel.php';
         exportarCitasExcel();
@@ -200,6 +201,7 @@ if (isset($_GET["accion"])) {
 } else {
     $controlador->verPagina('Vista/html/inicio.php');
 }
+
 ///////////////cosito pa descargar PDF de la cita
 if (isset($_GET['accion']) && $_GET['accion'] == 'descargarCitaPDF' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     require('fpdf/fpdf.php');
@@ -267,7 +269,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'enviarCorreoCita' && $_SERVER[
     $citNumero = $_POST['CitNumero'];
     $correoDestino = $_POST['correo_destino'];
 
-    // Busca los datos de la cita
+// Busca los datos de la cita
     $conn = new mysqli("localhost", "root", "", "citas");
     $stmt = $conn->prepare("SELECT c.*, 
         p.PacNombres, p.PacApellidos, p.PacIdentificacion, 

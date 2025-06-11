@@ -280,3 +280,8 @@ button.agregar-tratamiento {
     box-shadow: 0 2px 8px rgba(24,90,157,0.10);
 }
 
+/*boton de excel*/
+.btn-excel{
+    background-color: #209f62;
+}
+

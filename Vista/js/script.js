@@ -19,7 +19,16 @@ $(document).ready(function () {
     },
   });
 });
+//////////letrero de cosito para cosito de consultar pacientes
 function consultarPaciente() {
+  var documento = document.getElementById("asignarDocumento").value;
+
+  if (!documento || documento.trim() === "") {
+    alert("Por favor ingrese el documento del paciente antes de consultar");
+    document.getElementById("asignarDocumento").focus();
+    return false;
+  }
+
   var url =
     "index.php?accion=ConsultarPaciente&documento=" +
     $("#asignarDocumento").val();

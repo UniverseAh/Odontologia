@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_REFERER} buttons-for-website\.com [NC,OR]
+RewriteCond %{HTTP_REFERER} darodar\.com [NC,OR]
+Rewriterule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php?accion=$1&id=$2 [L]
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?accion=$1 [L]y
