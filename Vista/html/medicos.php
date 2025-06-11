@@ -24,7 +24,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?accion=medicos">Consultar Médicos</a></li>
                 <li><a href="index.php?accion=tratamientos">Tratamientos</a></li>
                 <li><a href="index.php?accion=consultorio">Consultorios</a></li>
-                <!-- Cambiar el enlace directo por un botón con onclick -->
+                <!-- boton para descargar el excel -->
             <li><a href="#" onclick="confirmarDescarga(event)" class="btn-excel">Descargar Excel</a></li>
             <?php elseif ($_SESSION['rol'] == 2): // Médico ?>
                 <li><a href="index.php?accion=asignar">Asignar</a></li>
